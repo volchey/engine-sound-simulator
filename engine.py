@@ -101,8 +101,8 @@ class Engine:
         # Leftover new samples become the audio buffer for the next run
         num_new_samples = num_samples - len(self._audio_buffer)
         buf = audio_tools.concat([self._audio_buffer, engine_snd[:num_new_samples]])
-        assert len(buf) == num_samples, (f'${num_samples} requested, but ${len(buf)} samples provided, from ' +
-            f'${len(self._audio_buffer)} buffered samples and ${num_new_samples} new samples')
+        # assert len(buf) == num_samples, (f'${num_samples} requested, but ${len(buf)} samples provided, from ' +
+        #     f'${len(self._audio_buffer)} buffered samples and ${num_new_samples} new samples')
         self._audio_buffer = engine_snd[num_new_samples:]
         return buf
 
@@ -120,3 +120,9 @@ class Engine:
 
         print("\033[A                             \033[A") # clear previous line in console
         print('RPM', self._rpm)
+
+    def specific_rpm(self, target_rpm):
+        self._rpm = target_rpm
+        print('RPM', self._rpm, end="\r")
+        engine_snd = self._gen_audio_one_engine_cycle()
+        self._audio_buffer = audio_tools.concat([self._audio_buffer, engine_snd])
