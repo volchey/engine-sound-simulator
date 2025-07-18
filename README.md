@@ -2,15 +2,23 @@ Engine Sound Simulator
 ======================
 Simulates engine sounds from first principles
 
+## Setup virtual environment
+```
+python -m venv venv
+```
+## Activate
+```
+source venv/bin/activate
+```
+or on Windows
+```
+.\venv\Scripts\activate.bat
+```
+## Install dependencies
+```
+pip install -r requirements.txt
+```
 ## Run
 ```
-pip install -r requirements.txt --user
-python main.py
-```
-
-## Troubleshooting
-PermissionError: The user (that this program is being run as) does not have permission to access the input events, check groups and permissions, for example, on Debian, the user needs to be in the input group.
-```
-sudo usermod -aG input $USER
-su - $USER # or logout and login again
+python main.py --mavlink={your address}
 ```

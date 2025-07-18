@@ -1,12 +1,26 @@
+import argparse
 import controls
 import engine_factory
 from audio_device import AudioDevice
 from pymavlink import mavutil
 
+# Argument parsing
+parser = argparse.ArgumentParser(
+    description="Engine sound simulator. Use --mavlink to specify MAVLink connection string (e.g. udp:127.0.0.1:14556)."
+)
+parser.add_argument(
+    "--mavlink",
+    type=str,
+    default="udp:127.0.0.1:14556",
+    help="MAVLink connection string, e.g. udp:127.0.0.1:14556"
+)
+args = parser.parse_args()
+
+
 # MAVLink connection
-master = mavutil.mavlink_connection('udp:127.0.0.1:14556')
+master = mavutil.mavlink_connection(args.mavlink)
 master.wait_heartbeat()
-print("Connected to MAVLink")
+print(f"Connected to MAVLink at {args.mavlink}")
 
 engine = engine_factory.v_twin_60_deg()
 
